@@ -113,8 +113,15 @@ ENV CXX=${USE_CLANG:+"clang++"}
 ENV CC=${CC:-"gcc"}
 ENV CXX=${CXX:-"g++"}
 
+# Setup vim
+RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+    git clone https://github.com/trprice/vimrc.git ~/vimrc && \
+    cp ~/vimrc/.vimrc ~/.vimrc && \
+    cp -R ~/vimrc/.config ~ && \
+	vim +PluginInstall +qall
+
 # Include project
-#ADD . /workspaces/cpp_starter_project
-#WORKDIR /workspaces/cpp_starter_project
+ADD . /workspaces/cpp_starter_project
+WORKDIR /workspaces/cpp_starter_project
 
 CMD ["/bin/bash"]
