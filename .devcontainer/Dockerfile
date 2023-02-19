@@ -113,7 +113,13 @@ ENV CXX=${USE_CLANG:+"clang++"}
 ENV CC=${CC:-"gcc"}
 ENV CXX=${CXX:-"g++"}
 
-# Setup vim
+# Update Neovim
+RUN apt remove -y neovim && \
+    add-apt-repository ppa:neovim-ppa/stable && \
+    apt update && \
+    apt install -y neovim
+
+# Setup vimrc
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
     git clone https://github.com/trprice/vimrc.git ~/vimrc && \
     cp ~/vimrc/.vimrc ~/.vimrc && \
