@@ -5,6 +5,9 @@
 #include <CLI/CLI.hpp>
 #include <spdlog/spdlog.h>
 #include <cpr/cpr.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 // This file will be generated automatically when you run the CMake configuration step.
 // It creates a namespace called `myproject`.
@@ -15,7 +18,9 @@ std::string GetExternalIPAddress()
 {
     cpr::Response response = cpr::Get(cpr::Url{"https://api.ipify.org?format=json"});
 
-    fmt::print("response.txt: '{}'\n", response.text);
+    json data = json::parse(response.text);
+
+    fmt::print("Current External IP Address = {}\n", data["ip"]);
 
     // This should be in JSON so we'll need to parse it but return it to allow it to compile.
     return response.text;
