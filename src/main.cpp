@@ -4,28 +4,16 @@
 
 #include <CLI/CLI.hpp>
 #include <spdlog/spdlog.h>
-#include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
-
 using json = nlohmann::json;
+
+#include "api_calls/ExternalIP.h"
+
 
 // This file will be generated automatically when you run the CMake configuration step.
 // It creates a namespace called `myproject`.
 // You can modify the source template at `configured_files/config.hpp.in`.
 #include <internal_use_only/config.hpp>
-
-std::string GetExternalIPAddress()
-{
-    cpr::Response response = cpr::Get(cpr::Url{"https://api.ipify.org?format=json"});
-
-    json data = json::parse(response.text);
-
-    fmt::print("Current External IP Address = {}\n", data["ip"]);
-
-    // This should be in JSON so we'll need to parse it but return it to allow it to compile.
-    return response.text;
-}
-
 
 // NOLINTNEXTLINE(bugprone-exception-escape)
 int main(int argc, const char **argv)
@@ -54,7 +42,8 @@ int main(int argc, const char **argv)
       fmt::print("No Message Provided :(\n");
     }
 
-    std::string response = GetExternalIPAddress();
+    ExternalIP externalIPAPI;
+    std::string response = externalIPAPI.GetExternalIPAddress();
   } catch (const std::exception &e) {
     spdlog::error("Unhandled exception in main: {}", e.what());
   }
