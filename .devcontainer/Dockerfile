@@ -15,7 +15,7 @@ RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
 
 # Install conan
 RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install conan && \
+    python3 -m pip install "conan==1.59.0" && \
     conan --version
 
 # By default, anything you run in Docker is done as superuser.
@@ -127,7 +127,7 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.v
 	vim +PluginInstall +qall
 
 # Include project
-ADD . /workspaces/cpp_starter_project
-WORKDIR /workspaces/cpp_starter_project
+ADD . /workspaces/DNSUpdater
+WORKDIR /workspaces/DNSUpdater
 
 CMD ["/bin/bash"]

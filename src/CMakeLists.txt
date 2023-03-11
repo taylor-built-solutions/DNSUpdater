@@ -5,7 +5,7 @@ find_package(cpr CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
 # Generic test that uses conan libs
-add_executable(intro main.cpp)
+add_executable(intro main.cpp api_calls/ExternalIP.cpp)
 target_link_libraries(
   intro
   PUBLIC project_options project_warnings
