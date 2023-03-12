@@ -7,9 +7,9 @@ class ExternalIP
 {
 public:
   std::string GetExternalIPAddress();
-  std::string IPAddress() const { return externalIP; }
+  std::string IPAddress() const { return mExternalIP; }
 
 private:
-  std::string externalIP;
-  json externalIPJson;
+  std::string mExternalIP;
+  json mExternalIPJson;
 };
