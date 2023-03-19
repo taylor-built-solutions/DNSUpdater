@@ -3,8 +3,8 @@
 #include <optional>
 
 #include <CLI/CLI.hpp>
-#include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
+#include <spdlog/spdlog.h>
 using json = nlohmann::json;
 
 #include "api_calls/ExternalIP.h"
@@ -21,8 +21,6 @@ int main(int argc, const char **argv)
   try {
     CLI::App app{ fmt::format("{} version {}", myproject::cmake::project_name, myproject::cmake::project_version) };
 
-    std::optional<std::string> message;
-    app.add_option("-m,--message", message, "A message to print back out");
     bool show_version = false;
     app.add_flag("--version", show_version, "Show version information");
 
@@ -31,15 +29,6 @@ int main(int argc, const char **argv)
     if (show_version) {
       fmt::print("{}\n", myproject::cmake::project_version);
       return EXIT_SUCCESS;
-    }
-
-    // Use the default logger (stdout, multi-threaded, colored)
-    spdlog::info("Hello, {}!", "World");
-
-    if (message) {
-      fmt::print("Message: '{}'\n", *message);
-    } else {
-      fmt::print("No Message Provided :(\n");
     }
 
     ExternalIP externalIPAPI;
