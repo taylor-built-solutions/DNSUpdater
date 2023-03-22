@@ -32,10 +32,17 @@ bool currentIP::UpdateCurrentIP(std::string externalIP)
 
   if (externalIP.empty()) {
     // Log an error and return false;
-
-
+    spdlog::error("currentIP::UpdateCurrentIP() was passed an empty string. Not updating the current IP address");
     return success;
   }
+
+  json jsonOutput;
+  jsonOutput["ip"] = externalIP;
+
+  // Open and truncate the file. We'll overwrite whatever is there with what we know is the current IP
+  ofstream configFile;
+  configFile.open(mFileName, std::ofstream::out | std::ofsteram::trunc);
+  configFile << jsonOutput;
 
   return success;
 }
