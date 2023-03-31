@@ -5,10 +5,10 @@ find_package(cpr CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
 # Generic test that uses conan libs
-add_executable(intro main.cpp api_calls/ExternalIP.cpp)
+add_executable(DNSUpdater main.cpp api_calls/ExternalIP.cpp)
 target_link_libraries(
-  intro
+  DNSUpdater
   PUBLIC project_options project_warnings
   PRIVATE CLI11::CLI11 fmt::fmt spdlog::spdlog cpr::cpr nlohmann_json::nlohmann_json)
 
-target_include_directories(intro PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_include_directories(DNSUpdater PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")

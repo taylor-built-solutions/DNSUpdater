@@ -7,7 +7,7 @@ project(CmakeConfigPackageTests LANGUAGES CXX)
 if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
   enable_testing()
 
-  find_package(myproject CONFIG REQUIRED) # for intro, project_options, ...
+  find_package(myproject CONFIG REQUIRED) # for DNSUpdater, project_options, ...
 
   if(NOT TARGET myproject::project_options)
     message(FATAL_ERROR "Requiered config package not found!")
@@ -26,16 +26,16 @@ target_link_libraries(catch_main PUBLIC Catch2::Catch2)
 target_link_libraries(catch_main PRIVATE myproject::project_options)
 
 # Provide a simple smoke test to make sure that the CLI works and can display a --help message
-add_test(NAME cli.has_help COMMAND intro --help)
+add_test(NAME cli.has_help COMMAND DNSUpdater --help)
 
 # Provide a test to verify that the version being reported from the application
 # matches the version given to CMake. This will be important once you package
 # your program. Real world shows that this is the kind of simple mistake that is easy
 # to make, but also easy to test for.
-add_test(NAME cli.version_matches COMMAND intro --version)
+add_test(NAME cli.version_matches COMMAND DNSUpdater --version)
 set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests tests.cpp)
+add_executable(tests currentIP_Tests.cpp)
 target_link_libraries(tests PRIVATE myproject::project_warnings myproject::project_options catch_main)
 
 # automatically discover tests that are defined in catch based test files you can modify the unittests. Set TEST_PREFIX
