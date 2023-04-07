@@ -18,12 +18,10 @@ endif()
 # ---- Dependencies ----
 
 find_package(Catch2 CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 include(Catch)
-
-add_library(catch_main OBJECT catch_main.cpp)
-target_link_libraries(catch_main PUBLIC Catch2::Catch2)
-target_link_libraries(catch_main PRIVATE myproject::project_options)
 
 # Provide a simple smoke test to make sure that the CLI works and can display a --help message
 add_test(NAME cli.has_help COMMAND DNSUpdater --help)
@@ -36,7 +34,9 @@ add_test(NAME cli.version_matches COMMAND DNSUpdater --version)
 set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
 add_executable(tests currentIP_Tests.cpp)
-target_link_libraries(tests PRIVATE myproject::project_warnings myproject::project_options catch_main)
+target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/src/configuration)
+target_include_directories(tests PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_link_libraries(tests PUBLIC Catch2::Catch2WithMain spdlog::spdlog nlohmann_json::nlohmann_json)
 
 # automatically discover tests that are defined in catch based test files you can modify the unittests. Set TEST_PREFIX
 # to whatever you want, or use different for different binaries
@@ -45,7 +45,7 @@ catch_discover_tests(
   TEST_PREFIX
   "unittests."
   REPORTER
-  xml
+  XML
   OUTPUT_DIR
   .
   OUTPUT_PREFIX

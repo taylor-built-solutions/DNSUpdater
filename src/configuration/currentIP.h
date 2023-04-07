@@ -8,7 +8,7 @@ public:
   static const std::string skDefaultFileName;
 
   currentIP();// Default constructor. Assume use of default file name
-  currentIP(std::string filename);
+  explicit currentIP(std::string filename);
 
   std::string GetCurrentIP();
   bool UpdateCurrentIP(std::string externalIP);
