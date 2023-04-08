@@ -5,13 +5,11 @@ using json = nlohmann::json;
 class currentIP
 {
 public:
-  static const std::string skDefaultFileName;
-
   currentIP();// Default constructor. Assume use of default file name
   explicit currentIP(std::string filename);
 
   std::string GetCurrentIP();
-  bool UpdateCurrentIP(std::string externalIP);
+  bool UpdateCurrentIP(const std::string &externalIP);
 
 private:
   std::string mFileName;

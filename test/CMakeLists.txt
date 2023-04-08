@@ -33,7 +33,7 @@ add_test(NAME cli.has_help COMMAND DNSUpdater --help)
 add_test(NAME cli.version_matches COMMAND DNSUpdater --version)
 set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests currentIP_Tests.cpp)
+add_executable(tests currentIP_Tests.cpp ${CMAKE_SOURCE_DIR}/src/configuration/currentIP.cpp)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/src/configuration)
 target_include_directories(tests PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
 target_link_libraries(tests PUBLIC Catch2::Catch2WithMain spdlog::spdlog nlohmann_json::nlohmann_json)

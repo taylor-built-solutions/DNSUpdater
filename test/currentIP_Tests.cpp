@@ -3,5 +3,10 @@
 
 TEST_CASE("currentIP_UpdateCurrentIP_Test", "[currentIP]")
 {
-  SECTION("Default File Name, No previously existing file") {}
+  SECTION("Default File Name, No previously existing file")
+  {
+    currentIP initialIP;
+
+    std::string ipAddress = initialIP.GetCurrentIP();
+  }
 }

@@ -1,15 +1,13 @@
 #include "currentIP.h"
 #include <fstream>
 
-const std::string currentIP::skDefaultFileName = "currentIP.json";
+currentIP::currentIP() : mFileName("currentIP.json"), mParsed(false) {}
 
-currentIP::currentIP() : mParsed = false { mFilenName = skDefaultFileName; }
-
-currentIP::currentIP(std::string filename) : mFileName = filename, mParsed = false {}
+currentIP::currentIP(std::string filename) : mFileName{ std::move(filename) }, mParsed(false) {}
 
 std::string currentIP::GetCurrentIP()
 {
-  ifstream configFile;
+  std::ifstream configFile;
   configFile.open(mFileName);
 
   std::string currentIPAddress;
@@ -26,7 +24,7 @@ std::string currentIP::GetCurrentIP()
   return currentIPAddress;
 }
 
-bool currentIP::UpdateCurrentIP(std::string externalIP)
+bool currentIP::UpdateCurrentIP(const std::string &externalIP)
 {
   bool success = false;
 
@@ -40,8 +38,8 @@ bool currentIP::UpdateCurrentIP(std::string externalIP)
   jsonOutput["ip"] = externalIP;
 
   // Open and truncate the file. We'll overwrite whatever is there with what we know is the current IP
-  ofstream configFile;
-  configFile.open(mFileName, std::ofstream::out | std::ofsteram::trunc);
+  std::ofstream configFile;
+  configFile.open(mFileName, std::ofstream::out | std::ofstream::trunc);
   configFile << jsonOutput;
 
   return success;
