@@ -1,11 +1,13 @@
 #include "currentIP.h"
 #include <fstream>
 
-currentIP::currentIP() : mFileName("currentIP.json"), mParsed(false) {}
+const char *const currentIP::skDefaultFileName = "currentIP.json";
+
+currentIP::currentIP() : mFileName(skDefaultFileName), mParsed(false) {}
 
 currentIP::currentIP(std::string filename) : mFileName{ std::move(filename) }, mParsed(false) {}
 
-std::string currentIP::GetCurrentIP()
+std::string currentIP::GetCurrentIP() const
 {
   std::ifstream configFile;
   configFile.open(mFileName);
