@@ -1,5 +1,6 @@
 ---
-Checks: "-abseil-*,
+Checks: "*,
+        -abseil-*,
         -altera-*,
         -android-*,
         -fuchsia-*,
@@ -12,6 +13,7 @@ Checks: "-abseil-*,
         -readability-avoid-const-params-in-decls,
         -cppcoreguidelines-non-private-member-variables-in-classes,
         -misc-non-private-member-variables-in-classes,
+        -readability-function-cognitive-complexity,
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
