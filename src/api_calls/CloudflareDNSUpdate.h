@@ -7,6 +7,9 @@ using json = nlohmann::json;
 class CloudflareDNSUpdate
 {
 public:
+  static const char *const skDnsUrl;
+
+  static json GetDNSRecords(const std::string &zoneID, const std::string &apiKey);
   static void UpdateDNSRecord(const CloudFlareDNSUpdateData &data);
 
 private:
