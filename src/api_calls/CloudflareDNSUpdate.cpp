@@ -2,11 +2,11 @@
 
 const char *const skDnsUrl = "https://api.cloudflare.com/client/v4/zones/";
 
-json GetDNSRecords(const std::string &zoneID, const std::string &apiKey)
+json CloudflareDNSUpdate::GetDNSRecords(const std::string &zoneID, const std::string &apiKey)
 {
   std::string url = skDnsUrl + zoneID + "/dns_records";// make "/dns_records" static?
-  cpr::Response response =
-    cpr::Get(cpr::Url{ url }, cpr::Header{ { "Content-Type", "application/json" }, { "X-Auth-Email", apiKey } });
+  cpr::Response response = cpr::Get(
+    cpr::Url{ url }, cpr::Header{ { "Content-Type", "application/json" }, { "Authorization", "Bearer" + apiKey } });
 
   return json::parse(response.text);
 }
