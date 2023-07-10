@@ -20,6 +20,8 @@ endif()
 find_package(Catch2 CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
+find_package(cpr CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 include(Catch)
 
@@ -33,12 +35,12 @@ add_test(NAME cli.has_help COMMAND DNSUpdater --help)
 add_test(NAME cli.version_matches COMMAND DNSUpdater --version)
 set_tests_properties(cli.version_matches PROPERTIES PASS_REGULAR_EXPRESSION "${PROJECT_VERSION}")
 
-add_executable(tests currentIP_Tests.cpp ${CMAKE_SOURCE_DIR}/src/configuration/currentIP.cpp CloudflareDNSUpdate_Tests.cpp)
+add_executable(tests currentIP_Tests.cpp ${CMAKE_SOURCE_DIR}/src/configuration/currentIP.cpp ${CMAKE_SOURCE_DIR}/src/api_calls/request_data/CloudFlareDNSUpdateData.cpp ${CMAKE_SOURCE_DIR}/src/api_calls/CloudflareDNSUpdate.cpp CloudflareDNSUpdate_Tests.cpp)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/src/configuration)
-target_include_directories(tests PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
+target_include_directories(tests PRIVATE ${CMAKE_BINARY_DIR}/configured_files/include)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/src/api_calls)
 
-target_link_libraries(tests PUBLIC Catch2::Catch2WithMain spdlog::spdlog nlohmann_json::nlohmann_json)
+target_link_libraries(tests PUBLIC Catch2::Catch2WithMain fmt::fmt cpr::cpr spdlog::spdlog nlohmann_json::nlohmann_json)
 
 # automatically discover tests that are defined in catch based test files you can modify the unittests. Set TEST_PREFIX
 # to whatever you want, or use different for different binaries

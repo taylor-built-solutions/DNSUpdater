@@ -8,6 +8,7 @@ class CloudflareDNSUpdate
 {
 public:
   static const char *const skDnsUrl;
+  static const char *const skDnsRecordsPath;
 
   static json GetDNSRecords(const std::string &zoneID, const std::string &apiKey);
   static void UpdateDNSRecord(const CloudFlareDNSUpdateData &data);

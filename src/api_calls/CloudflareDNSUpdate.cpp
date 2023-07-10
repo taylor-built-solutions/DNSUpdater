@@ -1,12 +1,15 @@
 #include "CloudflareDNSUpdate.h"
 
-const char *const skDnsUrl = "https://api.cloudflare.com/client/v4/zones/";
+const char *const CloudflareDNSUpdate::skDnsUrl = "https://api.cloudflare.com/client/v4/zones/";
+const char *const CloudflareDNSUpdate::skDnsRecordsPath = "/dns_records";
 
 json CloudflareDNSUpdate::GetDNSRecords(const std::string &zoneID, const std::string &apiKey)
 {
-  std::string url = skDnsUrl + zoneID + "/dns_records";// make "/dns_records" static?
-  cpr::Response response = cpr::Get(
-    cpr::Url{ url }, cpr::Header{ { "Content-Type", "application/json" }, { "Authorization", "Bearer" + apiKey } });
+  std::string url = CloudflareDNSUpdate::skDnsUrl + zoneID;
+  url += skDnsRecordsPath;
+  cpr::Header header = { { "Content-Type", "application/json" }, { "Authorization", "Bearer " + apiKey } };
+
+  cpr::Response response = cpr::Get(cpr::Url{ url }, header);
 
   return json::parse(response.text);
 }
@@ -26,8 +29,6 @@ void CloudflareDNSUpdate::UpdateDNSRecord(const CloudFlareDNSUpdateData &data)
   // Given that, I am ok if this is looked up by the user by hand and put in the configuration.
   // std::string zoneID = ""
   //  :
-
-  std::string dnsRecords = "dns_records";// Could be static but where?
 
   // if the dns record ID is blank
   //    do a listing on the dns records to get it and save it to the configuration file
