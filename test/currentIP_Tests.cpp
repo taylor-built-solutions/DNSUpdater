@@ -1,22 +1,22 @@
-#include "currentIP.h"
+#include "CurrentIP.h"
 #include <catch2/catch_test_macros.hpp>
 #include <fstream>
 
-TEST_CASE("currentIP_UpdateCurrentIP_Test", "[currentIP]")
+TEST_CASE("currentIP_UpdateCurrentIP_Test", "[CurrentIP]")
 {
   SECTION("Default File Name, No previously existing file")
   {
-    currentIP initialIP;
+    CurrentIP initialIP;
     std::string ipAddress = initialIP.GetCurrentIP();
     std::string fileName = initialIP.GetFileName();
 
     REQUIRE(ipAddress.empty());
-    REQUIRE(fileName == currentIP::skDefaultFileName);
+    REQUIRE(fileName == CurrentIP::skDefaultFileName);
   }
 
   SECTION("Default File Name, No previously existing file, Update the IP Address")
   {
-    currentIP initialIP;
+    CurrentIP initialIP;
     initialIP.UpdateCurrentIP("1.1.1.1");
 
     std::string ipAddress = initialIP.GetCurrentIP();
@@ -26,13 +26,13 @@ TEST_CASE("currentIP_UpdateCurrentIP_Test", "[currentIP]")
     fileStream.open(fileName.c_str(), std::fstream::in);
 
     REQUIRE(ipAddress == "1.1.1.1");
-    REQUIRE(fileName == currentIP::skDefaultFileName);
+    REQUIRE(fileName == CurrentIP::skDefaultFileName);
     REQUIRE(fileStream.is_open());
   }
 
   SECTION("Custom File Name")
   {
-    currentIP initialIP("Custom_CurrentIP.json");
+    CurrentIP initialIP("Custom_CurrentIP.json");
     initialIP.UpdateCurrentIP("1.1.1.1");
 
     std::string ipAddress = initialIP.GetCurrentIP();
@@ -48,5 +48,5 @@ TEST_CASE("currentIP_UpdateCurrentIP_Test", "[currentIP]")
     std::remove("Custom_CurrentIP.json");
   }
 
-  std::remove(currentIP::skDefaultFileName);
+  std::remove(CurrentIP::skDefaultFileName);
 }

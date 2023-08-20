@@ -5,7 +5,14 @@ find_package(cpr CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
 # Generic test that uses conan libs
-add_executable(DNSUpdater main.cpp api_calls/ExternalIP.cpp api_calls/CloudflareDNSUpdate.cpp api_calls/request_data/CloudflareDNSUpdateData.cpp configuration/currentIP.cpp)
+add_executable(DNSUpdater
+               main.cpp
+               api_calls/ExternalIP.cpp
+               api_calls/CloudflareDNSUpdate.cpp
+               api_calls/request_data/CloudflareDNSUpdateData.cpp
+               configuration/CurrentIP.cpp
+               configuration/SiteConfiguration.cpp)
+               
 target_link_libraries(
   DNSUpdater
   PUBLIC project_options project_warnings

@@ -2,14 +2,14 @@
 #include <spdlog/spdlog.h>
 using json = nlohmann::json;
 
-class currentIP
+class CurrentIP
 {
 public:
   // Both the variable and the pointer are const.
   static const char *const skDefaultFileName;
 
-  currentIP();// Default constructor. Assume use of default file name
-  explicit currentIP(std::string filename);
+  CurrentIP();// Default constructor. Assume use of default file name
+  explicit CurrentIP(std::string filename);
 
   std::string GetCurrentIP() const;
   std::string GetFileName() const { return mFileName; }

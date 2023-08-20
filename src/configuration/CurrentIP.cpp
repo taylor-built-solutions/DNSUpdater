@@ -1,13 +1,13 @@
-#include "currentIP.h"
+#include "CurrentIP.h"
 #include <fstream>
 
-const char *const currentIP::skDefaultFileName = "currentIP.json";
+const char *const CurrentIP::skDefaultFileName = "CurrentIP.json";
 
-currentIP::currentIP() : mFileName(skDefaultFileName), mParsed(false) {}
+CurrentIP::CurrentIP() : mFileName(skDefaultFileName), mParsed(false) {}
 
-currentIP::currentIP(std::string filename) : mFileName{ std::move(filename) }, mParsed(false) {}
+CurrentIP::CurrentIP(std::string filename) : mFileName{ std::move(filename) }, mParsed(false) {}
 
-std::string currentIP::GetCurrentIP() const
+std::string CurrentIP::GetCurrentIP() const
 {
   std::ifstream configFile;
   configFile.open(mFileName);
@@ -26,13 +26,13 @@ std::string currentIP::GetCurrentIP() const
   return currentIPAddress;
 }
 
-bool currentIP::UpdateCurrentIP(const std::string &externalIP)
+bool CurrentIP::UpdateCurrentIP(const std::string &externalIP)
 {
   bool success = false;
 
   if (externalIP.empty()) {
     // Log an error and return false;
-    spdlog::error("currentIP::UpdateCurrentIP() was passed an empty string. Not updating the current IP address");
+    spdlog::error("CurrentIP::UpdateCurrentIP() was passed an empty string. Not updating the current IP address");
     return success;
   }
 
